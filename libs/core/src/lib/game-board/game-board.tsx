@@ -36,7 +36,13 @@ export function GameBoard() {
     <Stack>
       {!isDeckCreationInProgress && (
         <>
-          <Flex justify="space-between" align="center" p="4">
+          <Flex
+            justify="space-between"
+            align={[null, 'center']}
+            p="4"
+            direction={['column-reverse', 'row']}
+            gap={[4, null]}
+          >
             <Stack spacing="2">
               <PairsStat
                 allPairs={deck.length / 2}
@@ -44,22 +50,20 @@ export function GameBoard() {
               />
               <MovesStat moves={moves} />
             </Stack>
-            <Box>
-              <Button colorScheme="cyan" onClick={() => startNewGame()}>
-                New game
-              </Button>
-            </Box>
+            <Button colorScheme="cyan" size="lg" onClick={() => startNewGame()}>
+              New game
+            </Button>
           </Flex>
           <SimpleGrid
             as={motion.div}
             variants={container}
             initial="hidden"
             animate="show"
-            padding={4}
+            padding={[2, 4]}
             borderWidth="1px"
             borderRadius="md"
             borderColor="gray.200"
-            columns={5}
+            columns={[4, 5]}
             spacing="3"
             gridAutoColumns="auto"
           >
@@ -67,8 +71,8 @@ export function GameBoard() {
               checkCardFounded(card.id) ? (
                 <Box
                   key={card.id}
-                  w="96px"
-                  h="96px"
+                  w={['74px', '96px']}
+                  h={['74px', '96px']}
                   borderWidth="1px"
                   borderColor="gray.100"
                   borderRadius="md"

@@ -13,8 +13,8 @@ export function GameCard(props: CardProps) {
     <Box
       as={motion.div}
       cursor="pointer"
-      w="96px"
-      h="96px"
+      w={['74px', '96px']}
+      h={['74px', '96px']}
       position="relative"
       boxShadow="base"
       borderRadius="md"

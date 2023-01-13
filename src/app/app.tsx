@@ -6,7 +6,7 @@ export function App() {
 
   return (
     <Container maxW="container.lg" centerContent>
-      <Box p="6">
+      <Box p={[null, 6]}>
         {gameStatus === 'start' && <StartGame />}
         {gameStatus === 'play' && <GameBoard />}
         {gameStatus === 'end' && <GameResult />}
