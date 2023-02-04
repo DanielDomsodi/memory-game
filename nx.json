@@ -3,9 +3,10 @@
   "npmScope": "memory-game",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "Mzk2NGM1MTEtN2I4MS00YTlmLWE5MzktNWVmNDQ3Y2FkOTZhfHJlYWQtd3JpdGU="
       }
     }
   },
@@ -14,10 +15,10 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "e2e": {
-      "inputs": ["default", "^production"]
-    },
     "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    },
+    "e2e": {
       "inputs": ["default", "^production"]
     },
     "lint": {
@@ -30,6 +31,7 @@
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/.eslintrc.json"
     ],
     "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
@@ -37,20 +39,17 @@
   "generators": {
     "@nrwl/react": {
       "application": {
-        "style": "@emotion/styled",
-        "linter": "eslint",
-        "bundler": "vite",
         "babel": true
       },
-      "component": {
-        "style": "@emotion/styled"
-      },
       "library": {
+        "unitTestRunner": "vitest"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
         "style": "@emotion/styled",
-        "linter": "eslint",
-        "unitTestRunner": "none"
+        "linter": "eslint"
       }
     }
-  },
-  "defaultProject": "memory-game"
+  }
 }

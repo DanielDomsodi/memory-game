@@ -1,5 +1,9 @@
-import { BASE_API_URL } from './api.constant';
-import { Category, Emoji, Response } from './api.type';
+import { Category, Emoji, Response } from './api.model';
+
+/**
+ * Base url for the API.
+ */
+export const BASE_API_URL = 'https://api.emojisworld.fr/v1';
 
 export async function getCategories(): Promise<Response<Category[]>> {
   const url = `${BASE_API_URL}/categories`;

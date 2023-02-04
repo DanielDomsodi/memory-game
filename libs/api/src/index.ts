@@ -1,2 +1,2 @@
 export * from './lib/api';
-export * from './lib/api.type';
+export * from './lib/api.model';

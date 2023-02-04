@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@memory-game/api": ["libs/api/src/index.ts"],
-      "@memory-game/core": ["libs/core/src/index.ts"]
+      "@memory-game/game": ["libs/game/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
