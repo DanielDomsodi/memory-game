@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@memory-game/api": ["libs/api/src/index.ts"],
-      "@memory-game/game": ["libs/game/src/index.ts"]
+      "@memory-game/game": ["libs/game/src/index.ts"],
+      "@memory-game/prisma": ["libs/prisma/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

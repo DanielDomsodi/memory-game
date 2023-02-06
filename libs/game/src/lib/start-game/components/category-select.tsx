@@ -1,9 +1,9 @@
 import { Select, SelectProps } from '@chakra-ui/react';
-import { Category } from '@memory-game/api';
+import { EmojiCategory } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
 
 export type CategorySelectProps = {
-  options: Category[];
+  options: EmojiCategory[];
 } & SelectProps;
 
 export function CategorySelect(props: CategorySelectProps) {

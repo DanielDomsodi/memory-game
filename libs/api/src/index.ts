@@ -1,2 +1,1 @@
-export * from './lib/api';
-export * from './lib/api.model';
+export * from './lib/emojis/emojis-api';

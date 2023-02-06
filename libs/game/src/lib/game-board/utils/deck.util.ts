@@ -1,4 +1,4 @@
-import { Emoji } from '@memory-game/api';
+import { Emoji } from '@prisma/client';
 import { Card } from '../game-board.type';
 
 // Source: https://bost.ocks.org/mike/shuffle/

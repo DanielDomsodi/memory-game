@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model EmojiCategory {
+  id     Int     @id @unique @default(autoincrement()) @db.SmallInt
+  name   String
+  emojis Emoji[]
+
+  @@map("emoji_categories")
+}
+
+model Emoji {
+  id               Int           @id @default(autoincrement()) @db.SmallInt
+  name             String
+  code             String
+  emoji            String
+  categoryId       Int           @map("category_id") @db.SmallInt
+  emoji_categories EmojiCategory @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("emojis")
+}

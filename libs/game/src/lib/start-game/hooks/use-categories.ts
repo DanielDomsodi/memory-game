@@ -9,10 +9,7 @@ export function useCategories() {
 
   const { data: categories, isLoading: isCategoriesQueryLoading } = useQuery({
     queryKey: ['categories'],
-    queryFn: async () => {
-      const data = await getCategories();
-      return data.results;
-    },
+    queryFn: getCategories,
   });
 
   return {

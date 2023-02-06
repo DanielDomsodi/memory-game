@@ -13,8 +13,7 @@ export function useEmojis() {
         return;
       }
 
-      const data = await getRandomEmojisByCategory(selectedCategoryId);
-      return data.results;
+      return getRandomEmojisByCategory(selectedCategoryId);
     },
     refetchOnWindowFocus: false,
     enabled: shouldFetchEmojis,
