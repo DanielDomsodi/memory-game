@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { GameProvider } from '@memory-game/game';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
@@ -21,6 +22,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
             </GameProvider>
           </QueryClientProvider>
         </ChakraProvider>
+        <Analytics />
       </main>
     </>
   );
