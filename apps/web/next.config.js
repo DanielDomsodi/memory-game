@@ -7,8 +7,11 @@ const { withNx } = require('@nrwl/next/plugins/with-nx');
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  experimental: {
+    appDir: true,
+  },
   nx: {
-    // Set this to true if you would like to to use SVGR
+    // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
