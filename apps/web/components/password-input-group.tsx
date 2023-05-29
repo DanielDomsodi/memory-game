@@ -1,6 +1,5 @@
 'use client';
 
-import { Icon } from '@chakra-ui/react';
 import {
   InputGroup,
   InputLeftElement,
@@ -9,12 +8,14 @@ import {
 import { cloneElement, isValidElement, useState } from 'react';
 import { IoEye, IoEyeOff, IoKey } from 'react-icons/io5';
 
-export type PasswordInputGroup = {
+export type PasswordInputGroup = React.ComponentPropsWithoutRef<
+  typeof InputGroup
+> & {
   input: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
 export function PasswordInputGroup(props: PasswordInputGroup) {
-  const { input } = props;
+  const { input, children, ...rest } = props;
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const _input =
@@ -23,17 +24,16 @@ export function PasswordInputGroup(props: PasswordInputGroup) {
       type: passwordVisibility ? 'text' : 'password',
     });
 
-  const icon = passwordVisibility ? IoEyeOff : IoEye;
-
   return (
-    <InputGroup size="lg">
+    <InputGroup size="lg" {...rest}>
       <InputLeftElement pointerEvents="none">
-        <Icon as={IoKey} />
+        <IoKey />
       </InputLeftElement>
       {_input}
       <InputRightElement onClick={() => setPasswordVisibility((pv) => !pv)}>
-        <Icon as={icon} />
+        {passwordVisibility ? <IoEyeOff /> : <IoEye />}
       </InputRightElement>
+      {children}
     </InputGroup>
   );
 }

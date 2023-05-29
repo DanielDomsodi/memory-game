@@ -1,25 +1,12 @@
 'use client';
 
-import {
-  Alert,
-  AlertIcon,
-  Center,
-  ChakraProvider,
-  FormControl,
-  FormErrorMessage,
-  Heading,
-  Icon,
-  Image,
-  Link,
-  Text,
-} from '@chakra-ui/react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   SignInWithPasswordCredentials,
   SignUpWithPasswordCredentials,
 } from '@supabase/supabase-js';
-import NextLink from 'next/link';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAt } from 'react-icons/io5';
@@ -158,92 +145,81 @@ export default function Auth(props: AuthProps) {
   ]);
 
   return (
-    <ChakraProvider>
-      <div className="flex w-full flex-col gap-10 rounded-xl bg-white px-4 py-8 md:max-w-md md:p-8 lg:max-w-xl lg:p-12">
+    <div className="flex w-full flex-col gap-10 rounded-xl bg-white px-4 py-8 md:max-w-md md:p-8 lg:max-w-xl lg:p-12">
+      <div className="flex flex-col items-center gap-6">
+        <img src="logo.svg" className="h-[64px] w-[64px]" alt="" />
         <div className="flex flex-col items-center gap-6">
-          <Image src="logo.svg" boxSize="64px" alt="" />
-          <div className="flex flex-col items-center gap-6">
-            <Heading fontWeight="bold" textAlign="center">
-              {AUTH_TEXTS[authView].headingTitle}
-            </Heading>
-            {AUTH_TEXTS[authView].headingHint && (
-              <Text color={['whiteAlpha.700', null, 'gray']}>
-                {AUTH_TEXTS[authView].headingHint}
-              </Text>
-            )}
-          </div>
+          <h2 className="text-center text-4xl font-bold">
+            {AUTH_TEXTS[authView].headingTitle}
+          </h2>
+          {AUTH_TEXTS[authView].headingHint && (
+            <p className="text-gray-500">{AUTH_TEXTS[authView].headingHint}</p>
+          )}
         </div>
-        <form
-          onSubmit={handleSubmit(onValid, (e) => {
-            console.log('error: ', e);
-          })}
-          noValidate
-        >
-          <div className="mb-8 flex flex-col items-center gap-4">
-            {alert && (
-              <Alert status={alert.type}>
-                <AlertIcon />
-                {alert.message}
-              </Alert>
-            )}
-            <FormControl isInvalid={!!errors.email}>
-              <InputGroup size="lg">
-                <InputLeftElement pointerEvents="none">
-                  <Icon as={IoAt} />
-                </InputLeftElement>
-                <Input
-                  type="email"
-                  placeholder="Email address"
-                  {...register('email')}
-                />
-              </InputGroup>
-              <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl isInvalid={!!errors?.password}>
-              <PasswordInputGroup
-                input={
-                  <Input {...register('password')} placeholder="Password" />
-                }
-              ></PasswordInputGroup>
-              <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
-            </FormControl>
-
-            {isSignInView && (
-              <Link
-                as={NextLink}
-                href="/forgot"
-                alignSelf="flex-end"
-                textDecoration="underline"
-              >
-                Forgot password?
-              </Link>
-            )}
-          </div>
-          <Button type="submit" size="lg" full isLoading={isLoading}>
-            {AUTH_TEXTS[authView].button}
-          </Button>
-
-          <HCaptcha
-            ref={captcha}
-            size="invisible"
-            sitekey="8a5ac651-b5e0-465f-9015-60b4758ca342"
-            onVerify={setCaptchaToken}
-          />
-        </form>
-        <Center mt={10}>
-          <Text textAlign="center">
-            {AUTH_TEXTS[authView].accountQuestion}{' '}
-            <Link
-              as={NextLink}
-              href={isSignInView ? '/signup' : '/signin'}
-              textDecoration="underline"
-            >
-              {AUTH_TEXTS[authView].accountQuestionLink}
-            </Link>
-          </Text>
-        </Center>
       </div>
-    </ChakraProvider>
+      <form
+        onSubmit={handleSubmit(onValid, (e) => {
+          console.log('error: ', e);
+        })}
+        noValidate
+      >
+        <div className="mb-8 flex flex-col items-center gap-4">
+          {/* Alert placeholder */}
+          <InputGroup className="w-full" size="lg">
+            <InputLeftElement pointerEvents="none">
+              <IoAt />
+            </InputLeftElement>
+            <Input
+              type="email"
+              placeholder="Email address"
+              {...register('email')}
+            />
+            {!!errors.email && (
+              <div className="mt-2 text-sm text-red-500">
+                {errors?.email?.message}
+              </div>
+            )}
+          </InputGroup>
+
+          <PasswordInputGroup
+            className="w-full"
+            input={<Input {...register('password')} placeholder="Password" />}
+          >
+            {!!errors.password && (
+              <div className="mt-2 text-sm text-red-500">
+                {errors?.password?.message}
+              </div>
+            )}
+          </PasswordInputGroup>
+
+          {isSignInView && (
+            <Link href="/forgot" className="self-end underline">
+              Forgot password?
+            </Link>
+          )}
+        </div>
+        <Button type="submit" size="lg" full isLoading={isLoading}>
+          {AUTH_TEXTS[authView].button}
+        </Button>
+
+        <HCaptcha
+          ref={captcha}
+          size="invisible"
+          sitekey="8a5ac651-b5e0-465f-9015-60b4758ca342"
+          onVerify={setCaptchaToken}
+        />
+      </form>
+      <div className="mt-10 flex justify-center">
+        <p className="text-center">
+          {AUTH_TEXTS[authView].accountQuestion}{' '}
+          <Link
+            href={isSignInView ? '/signup' : '/signin'}
+            className="underline"
+          >
+            {AUTH_TEXTS[authView].accountQuestionLink}
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }
