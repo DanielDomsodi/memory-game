@@ -6,14 +6,10 @@
   "tags": [],
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/theme/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/theme/**/*.{ts,tsx,js,jsx}"]
       }
     }
   }

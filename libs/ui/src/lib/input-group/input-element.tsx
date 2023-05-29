@@ -53,7 +53,7 @@ export const InputLeftElement = forwardRef<
   return (
     <InputElement
       ref={ref}
-      className={classNames('left-0', className)}
+      className={classNames('left-0 text-gray-400', className)}
       placement="left"
       {...rest}
     >

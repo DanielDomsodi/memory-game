@@ -1,6 +1,15 @@
+import type { StorybookConfig } from '@storybook/react-vite';
 const { mergeConfig } = require('vite');
-const viteTsConfigPaths = require('vite-tsconfig-paths').default;
-module.exports = {
+
+const config: StorybookConfig = {
+  framework: {
+    name: '@storybook/react-vite',
+    options: {
+      builder: {
+        viteConfigPath: 'libs/ui/vite.config.ts',
+      },
+    },
+  },
   stories: [
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
@@ -15,23 +24,15 @@ module.exports = {
       disable: true,
     },
   },
-  async viteFinal(config, { configType }) {
-    return mergeConfig(config, {
-      plugins: [
-        viteTsConfigPaths({
-          root: '../../../',
-        }),
-      ],
-    });
-  },
-  framework: {
-    name: '@storybook/react-vite',
-    options: {},
+  async viteFinal(config) {
+    return mergeConfig(config, {});
   },
   docs: {
-    autodocs: true,
+    autodocs: false,
   },
 };
+
+export default config;
 
 // To customize your Vite configuration you can use the viteFinal field.
 // Check https://storybook.js.org/docs/react/builders/vite#configuration

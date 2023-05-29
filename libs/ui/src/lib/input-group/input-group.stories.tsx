@@ -1,33 +1,23 @@
 import type { Meta } from '@storybook/react';
-import { InputGroup } from './input-group';
-import Input from '../input/input';
-import {
-  InputLeftElement,
-  InputRightElement,
-} from '../input-element/input-element';
 import { IoAt, IoKey } from 'react-icons/io5';
-import { useEffect, useRef, useState } from 'react';
-import { BaseSize } from '../theme/theme.type';
+import { Input } from '../input';
+import { InputLeftElement, InputRightElement } from './input-element';
+import { InputGroup } from './input-group';
 
-const Story: Meta<typeof InputGroup> = {
+const meta = {
   component: InputGroup,
   title: 'InputGroup',
-};
-export default Story;
+} satisfies Meta<typeof InputGroup>;
 
-export const Primary: typeof Story = {
+export default meta;
+
+type Story = Meta<typeof InputGroup>;
+
+export const Primary: Story = {
   render: (args) => {
-    const [inputSize, setInputSize] = useState<BaseSize>('md');
-
-    useEffect(() => {
-      setTimeout(() => {
-        setInputSize('lg');
-      }, 2000);
-    });
-
     return (
       <div className="flex gap-4">
-        <InputGroup {...args} size={inputSize}>
+        <InputGroup {...args}>
           <InputLeftElement pointerEvents="none">
             <IoAt />
           </InputLeftElement>
@@ -39,5 +29,7 @@ export const Primary: typeof Story = {
       </div>
     );
   },
-  args: {},
+  args: {
+    size: 'md',
+  },
 };

@@ -12,7 +12,6 @@ import {
   Image,
   Link,
   Text,
-  VStack,
 } from '@chakra-ui/react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -160,19 +159,10 @@ export default function Auth(props: AuthProps) {
 
   return (
     <ChakraProvider>
-      <VStack
-        spacing={10}
-        color={['white', null, 'inherit']}
-        w="100%"
-        maxW={[null, 'md', 'lg']}
-        p={[4, 4, 12]}
-        borderRadius="lg"
-        backgroundColor={[null, null, 'white']}
-        alignItems="stretch"
-      >
-        <VStack spacing={6}>
+      <div className="flex w-full flex-col gap-10 rounded-xl bg-white px-4 py-8 md:max-w-md md:p-8 lg:max-w-xl lg:p-12">
+        <div className="flex flex-col items-center gap-6">
           <Image src="logo.svg" boxSize="64px" alt="" />
-          <VStack>
+          <div className="flex flex-col items-center gap-6">
             <Heading fontWeight="bold" textAlign="center">
               {AUTH_TEXTS[authView].headingTitle}
             </Heading>
@@ -181,15 +171,15 @@ export default function Auth(props: AuthProps) {
                 {AUTH_TEXTS[authView].headingHint}
               </Text>
             )}
-          </VStack>
-        </VStack>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit(onValid, (e) => {
             console.log('error: ', e);
           })}
           noValidate
         >
-          <VStack spacing={4} mb={8}>
+          <div className="mb-8 flex flex-col items-center gap-4">
             {alert && (
               <Alert status={alert.type}>
                 <AlertIcon />
@@ -229,7 +219,7 @@ export default function Auth(props: AuthProps) {
                 Forgot password?
               </Link>
             )}
-          </VStack>
+          </div>
           <Button type="submit" size="lg" full isLoading={isLoading}>
             {AUTH_TEXTS[authView].button}
           </Button>
@@ -253,7 +243,7 @@ export default function Auth(props: AuthProps) {
             </Link>
           </Text>
         </Center>
-      </VStack>
+      </div>
     </ChakraProvider>
   );
 }

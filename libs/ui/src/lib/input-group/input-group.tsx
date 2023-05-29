@@ -5,7 +5,7 @@ import {
   InputElementProps,
   InputLeftElement,
   InputRightElement,
-} from '../input-element/input-element';
+} from './input-element';
 import { BaseSizes, BaseThemeProps } from '../theme/theme.type';
 
 export type InputGroupProps = React.ComponentPropsWithRef<'div'> &

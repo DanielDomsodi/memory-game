@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import { createGlobPatternsForDependencies } from '@nrwl/react/tailwind';
+import { createGlobPatternsForDependencies } from '@nx/react/tailwind';
 import { join } from 'path';
 
 export default {

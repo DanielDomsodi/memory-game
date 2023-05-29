@@ -14,7 +14,7 @@ export type InputProps = Omit<React.ComponentPropsWithRef<'input'>, 'size'> &
   };
 
 const baseClasses =
-  'w-full rounded-md border ring-blue-100 focus:ring-1 transition';
+  'w-full rounded-md border ring-blue-100 focus:ring-1 transition placeholder:text-gray-400';
 
 const inputVariants: InputVariants = {
   outline: 'border-gray-300',
