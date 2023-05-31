@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { Input } from './input';
 
 const Story: Meta<typeof Input> = {
@@ -19,5 +19,6 @@ export const Primary: typeof Story = {
   args: {
     variant: 'outline',
     size: 'md',
+    disabled: false,
   },
 };

@@ -1,17 +1,25 @@
 import classNames from 'classnames';
 import { CSSProperties, forwardRef } from 'react';
-import { BaseSizes, BaseThemeProps } from '../theme/theme.type';
+import { BaseComponentTheme, BaseSize, ThemeProp } from '../theme/theme.type';
+import { InputProps } from '../input/input';
 
 export type InputElementProps = React.ComponentPropsWithRef<'div'> &
   Pick<CSSProperties, 'pointerEvents'> &
-  BaseThemeProps & {
+  Pick<InputProps, 'size'> & {
     placement?: 'left' | 'right';
   };
 
-const inputElementSizeClasses: BaseSizes = {
-  sm: 'w-8 h-8 text-size-sm',
-  md: 'w-10 h-10 text-size-md',
-  lg: 'w-12 h-12 text-size-lg',
+export type InputElementTheme = BaseComponentTheme & {
+  size: ThemeProp<BaseSize>;
+};
+
+const themeClasses: InputElementTheme = {
+  base: 'absolute top-0 flex items-center justify-center',
+  size: {
+    sm: 'w-8 h-8 text-size-sm',
+    md: 'w-10 h-10 text-size-md',
+    lg: 'w-12 h-12 text-size-lg',
+  },
 };
 
 const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
@@ -29,8 +37,8 @@ const InputElement = forwardRef<HTMLDivElement, InputElementProps>(
       <div
         ref={ref}
         className={classNames(
-          'absolute top-0 flex items-center justify-center',
-          inputElementSizeClasses[size],
+          themeClasses.base,
+          themeClasses.size[size],
           { 'pointer-events-none': pointerEvents === 'none' },
           className
         )}

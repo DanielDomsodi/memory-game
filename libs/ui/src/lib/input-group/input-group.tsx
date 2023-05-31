@@ -6,15 +6,23 @@ import {
   InputLeftElement,
   InputRightElement,
 } from './input-element';
-import { BaseSizes, BaseThemeProps } from '../theme/theme.type';
+import { BaseComponentTheme, BaseSize, ThemeProp } from '../theme/theme.type';
 
-export type InputGroupProps = React.ComponentPropsWithRef<'div'> &
-  BaseThemeProps;
+export type InputGroupProps = React.ComponentPropsWithRef<'div'> & {
+  size?: BaseSize;
+};
 
-const inputPsClasses: BaseSizes = {
-  sm: 'ps-8',
-  md: 'ps-10',
-  lg: 'ps-12',
+export type InputGroupTheme = BaseComponentTheme & {
+  size: ThemeProp<BaseSize>;
+};
+
+const themeClasses: InputGroupTheme = {
+  base: 'relative',
+  size: {
+    sm: 'ps-8',
+    md: 'ps-10',
+    lg: 'ps-12',
+  },
 };
 
 export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
@@ -29,7 +37,7 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
       if (child.type === Input) {
         return cloneElement<InputProps>(child, {
           size,
-          className: inputPsClasses[size],
+          className: themeClasses.size[size],
         });
       }
 
@@ -41,7 +49,11 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
     });
 
     return (
-      <div ref={ref} className={classNames('relative', className)} {...rest}>
+      <div
+        ref={ref}
+        className={classNames(themeClasses.base, className)}
+        {...rest}
+      >
         {clones}
       </div>
     );

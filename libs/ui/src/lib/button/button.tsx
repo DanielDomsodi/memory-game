@@ -1,29 +1,38 @@
 import { forwardRef, useMemo } from 'react';
 import {
-  BaseSizes,
-  BaseThemeProps,
-  ButtonThemeProps,
+  BaseComponentTheme,
+  BaseSize,
+  Color,
+  ThemeProp,
 } from '../theme/theme.type';
 import classNames from 'classnames';
 
-export type ButtonProps = React.ComponentPropsWithRef<'button'> &
-  BaseThemeProps &
-  ButtonThemeProps & {
-    isLoading?: boolean;
-    loadingText?: string;
-    full?: boolean;
+export type ButtonVariant = 'solid' | 'outline';
+
+export type ButtonTheme = BaseComponentTheme &
+  Record<ButtonVariant, ThemeProp<Color>> & {
+    size: ThemeProp<BaseSize>;
   };
 
-const baseClasses =
-  'inline-flex items-center justify-center rounded-md font-medium border transition disabled:cursor-not-allowed';
-
-const sizeClasses: BaseSizes = {
-  sm: 'h-8 px-3',
-  md: 'h-10 px-4',
-  lg: 'h-12 px-6',
+export type ButtonProps = Omit<
+  React.ComponentPropsWithRef<'button'>,
+  'color'
+> & {
+  variant?: ButtonVariant;
+  size?: BaseSize;
+  color?: Color;
+  isLoading?: boolean;
+  loadingText?: string;
+  full?: boolean;
 };
 
-const buttonThemeClasses = {
+const themeClasses: ButtonTheme = {
+  base: 'inline-flex items-center justify-center rounded-md font-medium border transition disabled:cursor-not-allowed',
+  size: {
+    sm: 'h-8 px-3',
+    md: 'h-10 px-4',
+    lg: 'h-12 px-6',
+  },
   solid: {
     brand:
       'bg-brand-500 hover:enabled:bg-brand-600 active:enabled:bg-brand-700 disabled:bg-brand-500/50 border-transparent text-white',
@@ -65,8 +74,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     } = props;
 
     const dynamicClasses = useMemo(() => {
-      const sizeClass = sizeClasses[size];
-      const themeClass = buttonThemeClasses[variant][color];
+      const sizeClass = themeClasses.size[size];
+      const themeClass = themeClasses[variant][color];
 
       return [sizeClass, themeClass];
     }, [size, variant, color]);
@@ -74,7 +83,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={classNames(baseClasses, ...dynamicClasses, {
+        className={classNames(themeClasses.base, ...dynamicClasses, {
           'opacity-50': isLoading,
           'w-full': full,
         })}
