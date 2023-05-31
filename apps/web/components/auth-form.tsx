@@ -9,12 +9,18 @@ import {
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IoAt } from 'react-icons/io5';
+import { IoAlertCircle, IoAt } from 'react-icons/io5';
 import { z } from 'zod';
 import { PasswordInputGroup } from './password-input-group';
 import { useRouter } from 'next/navigation';
 import { useSupabase } from '../app/supabase-provider';
-import { Button, Input, InputGroup, InputLeftElement } from '@memory-game/ui';
+import {
+  Alert,
+  Button,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from '@memory-game/ui';
 
 type AuthText = {
   headingTitle: string;
@@ -54,17 +60,12 @@ const authSchema = z.object({
 
 type AuthForm = z.infer<typeof authSchema>;
 
-type Alert = {
-  type: 'info' | 'error';
-  message: string;
-};
-
 export default function Auth(props: AuthProps) {
   const { redirectTo = '/', view = 'sign-in' } = props;
 
   const [authView, setAuthView] = useState(view);
   const [isLoading, setIsLoading] = useState(false);
-  const [alert, setAlert] = useState<Alert | undefined>(undefined);
+  const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
   const [captchaToken, setCaptchaToken] = useState<string | undefined>();
   const captcha = useRef<HCaptcha>(null);
   const { supabase } = useSupabase();
@@ -115,16 +116,11 @@ export default function Auth(props: AuthProps) {
       console.log('auth success: ', { user, session });
 
       if (error) {
-        setAlert({ type: 'error', message: error.message });
+        setErrorAlert(error.message);
         return;
       }
 
       if (user && !session) {
-        setAlert({
-          type: 'info',
-          message: `Confirmation email has been sent to ${getValues().email}.`,
-        });
-
         reset();
         router.replace(redirectTo);
         return;
@@ -164,7 +160,15 @@ export default function Auth(props: AuthProps) {
         noValidate
       >
         <div className="mb-8 flex flex-col items-center gap-4">
-          {/* Alert placeholder */}
+          {errorAlert && (
+            <Alert
+              className="w-full"
+              status="error"
+              alertIcon={<IoAlertCircle />}
+            >
+              {errorAlert}
+            </Alert>
+          )}
           <InputGroup className="w-full" size="lg">
             <InputLeftElement pointerEvents="none">
               <IoAt />
@@ -172,7 +176,7 @@ export default function Auth(props: AuthProps) {
             <Input
               type="email"
               placeholder="Email address"
-              {...register('email')}
+              {...register('email', { disabled: isLoading })}
             />
             {!!errors.email && (
               <div className="mt-2 text-sm text-red-500">
@@ -183,7 +187,13 @@ export default function Auth(props: AuthProps) {
 
           <PasswordInputGroup
             className="w-full"
-            input={<Input {...register('password')} placeholder="Password" />}
+            size="lg"
+            input={
+              <Input
+                {...register('password', { disabled: isLoading })}
+                placeholder="Password"
+              />
+            }
           >
             {!!errors.password && (
               <div className="mt-2 text-sm text-red-500">

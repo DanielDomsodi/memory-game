@@ -25,7 +25,7 @@ export function PasswordInputGroup(props: PasswordInputGroup) {
     });
 
   return (
-    <InputGroup size="lg" {...rest}>
+    <InputGroup {...rest}>
       <InputLeftElement pointerEvents="none">
         <IoKey />
       </InputLeftElement>
